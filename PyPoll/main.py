@@ -1,11 +1,15 @@
 import os
 import csv
-# Identifies file with poll data
+
+#choose 1 or 2
 file_num = 2
+
+# Identifies file with poll data
 file = os.path.join('raw_data', 'election_data_' + str(file_num) + '.csv')
 
 #Creates dictionary to be used for candidate name and vote count.
 poll = {}
+
 #Sets variable, total votes, to zero for count.
 total_votes = 0
 
@@ -59,14 +63,6 @@ if len(winner_list) > 1:
     for w in range(1, len(winner_list)):
         winner = winner + ", " + winner_list[w]
 
-#prints to terminal
-print('Election Results \n------------------------- \nTotal Votes: ' + str(total_votes) + 
-      '\n-------------------------')
-#prints using loop of tuples
-for entry in clean_data:
-    print(entry[0] + ": " + str(entry[2]) +'%  (' + str(entry[1]) + ')')
-print('------------------------- \nWinner: ' + winner + '\n-------------------------')
-
 #prints to file
 output_file = os.path.join('Output', 'election_results_' + str(file_num) +'.txt')
 
@@ -76,3 +72,7 @@ with open(output_file, 'w') as txtfile:
     for entry in clean_data:
         txtfile.writelines(entry[0] + ": " + str(entry[2]) +'%  (' + str(entry[1]) + ')\n')
     txtfile.writelines('------------------------- \nWinner: ' + winner + '\n-------------------------')
+
+#prints file to terminal
+with open(output_file, 'r') as readfile:
+    print(readfile.read())
