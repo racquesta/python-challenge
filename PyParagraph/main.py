@@ -2,42 +2,40 @@ import os
 import string
 
 #choose file_number (1 or 2)
-file_num = 2
+file_num = 1
 
 #sets file
 file = os.path.join('raw_data', 'paragraph_' + str(file_num) + '.txt')
 
 # open and reads file and saves text as paragraph string?
-paragraph = ''
+paragraph_str = ''
 with open(file, 'r') as txtfile:
-    paragraph = txtfile.read()
+    paragraph_str = txtfile.read()
 
 
 #sentence count by counting .
-sen_count = paragraph.count('.')
-
-#sentences = paragraph.split('.')
+sen_count = paragraph_str.count('.') + paragraph_str.count('?') + paragraph_str.count('!')
 
 #creates a string of upper and lowercase letters
 letters = string.ascii_letters + " " 
 
 #loops through paragraph string and deletes all characters 
 # that are not letters replacing with nothing
-for c in paragraph:
+for c in paragraph_str:
     if c not in letters:
-        paragraph = paragraph.replace(c,'')
+        paragraph_str = paragraph_str.replace(c,'')
 
 
 #reassigns the paragraph string and makes a list of words by splitting at spaces
-paragraph = paragraph.split(" ")
+paragraph_list = paragraph_str.split(" ")
 
 #counts all of the letters in list paragraph
 letter_total = 0
-for word in paragraph:
+for word in paragraph_list:
     letter_total += len(word)
 
 #counts words by counting the length of paragraph list
-word_count = len(paragraph)
+word_count = len(paragraph_list)
 
 #calculates average word length by dividing the total # of letters
 #by the number of words
