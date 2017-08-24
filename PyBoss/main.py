@@ -1,56 +1,11 @@
 import os
-import csv
+import csv 
 
 #choose 1 or 2
-file_num = 2
+file_num = 1
 
 #creates file path as file
 file = os.path.join('raw_data', 'employee_data' + str(file_num) + '.csv')
-
-#establishes lists for data
-id_num = []
-name = []
-dob = []
-ssn = []
-full_state = []
-
-# opens file, reads, and dumps to correct list
-with open(file, 'r') as csvfile:
-    csvread = csv.reader(csvfile)
-
-    next(csvread, None)
-
-    for row in csvread:
-        id_num.append(row[0])
-        name.append(row[1])
-        dob.append(row[2])
-        ssn.append(row[3])
-        full_state.append(row[4])
-
-first_name = []
-last_name = []
-
-#splits names and puts them in new, separate lists
-for n in name:
-    first_name.append(n.split(' ')[0])
-    last_name.append(n.split(' ')[1])
-
-month = []
-day = []
-year = []
-#splits dob and puts them in new, separate lists for month, day, and yeat
-for d in dob:
-    year.append(d.split('-')[0])
-    month.append(d.split('-')[1])
-    day.append(d.split('-')[2])
-
-format_dob = []
-for m in range(len(month)):
-    format_dob.append(month[m] + '/' + day[m] + '/' + year[m])
-
-private_ssn = []
-for num in ssn:
-    private_ssn.append('***-**-' + num[-4:])
 
 us_state_abbrev = {
     'Alabama': 'AL',
@@ -105,15 +60,29 @@ us_state_abbrev = {
     'Wyoming': 'WY',
 }
 
-abbr_state =  []  
-for state in full_state:
-    abbr_state.append(us_state_abbrev[state])
+emp_id = []
+first_name = []
+last_name = []
+dob =[]
+ssn = []
+state = []
 
-clean_data = zip(id_num, first_name, last_name, format_dob, private_ssn, abbr_state)
+with open(file, 'r') as csvfile:  
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        emp_id.append(row['Emp ID'])
+        first_name.append(row['Name'].split(" ")[0])
+        last_name.append(row['Name'].split(" ")[1])
+        dob.append(row['DOB'].split('-')[1] + '/' + row['DOB'].split('-')[2] + '/' + row['DOB'].split('-')[0])
+        ssn.append('***-**-' + row['SSN'].split('-')[2])
+        state.append(us_state_abbrev[row['State']])
+        
+
+new_data = zip(emp_id, first_name, last_name, dob, ssn, state)
 
 output_file = os.path.join('Output', 'clean_emp_data' + str(file_num) + '.csv')
 
 with open(output_file, 'w') as csvwrite:
     cleanfile = csv.writer(csvwrite, delimiter = ",")
     cleanfile.writerow(['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State'])
-    cleanfile.writerows(clean_data)
+    cleanfile.writerows(new_data)

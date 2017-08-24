@@ -13,7 +13,7 @@ with open(file, 'r') as txtfile:
     paragraph_str = txtfile.read()
 
 
-#sentence count by counting .
+#sentence count by counting ., ? and !
 sen_count = paragraph_str.count('.') + paragraph_str.count('?') + paragraph_str.count('!')
 
 #creates a string of upper and lowercase letters

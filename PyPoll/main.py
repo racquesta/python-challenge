@@ -2,7 +2,7 @@ import os
 import csv
 
 #choose 1 or 2
-file_num = 2
+file_num = 1
 
 # Identifies file with poll data
 file = os.path.join('raw_data', 'election_data_' + str(file_num) + '.csv')
@@ -29,7 +29,7 @@ with open(file, 'r') as csvfile:
             poll[row[2]] = poll[row[2]] + 1
         else:
             poll[row[2]] = 1
-            
+ 
 #create empty list for candidates and his/her vote count
 candidates = []
 num_votes = []
