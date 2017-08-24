@@ -7,6 +7,7 @@ file_num = 1
 #creates file path as file
 file = os.path.join('raw_data', 'employee_data' + str(file_num) + '.csv')
 
+#state abbr dictionary
 us_state_abbrev = {
     'Alabama': 'AL',
     'Alaska': 'AK',
@@ -60,6 +61,7 @@ us_state_abbrev = {
     'Wyoming': 'WY',
 }
 
+# empty lists for parsed data
 emp_id = []
 first_name = []
 last_name = []
@@ -67,8 +69,11 @@ dob =[]
 ssn = []
 state = []
 
+#opens csv file and reads in as ordered dictionary
+#no need to skip header row because itt serves as dict keys
 with open(file, 'r') as csvfile:  
     reader = csv.DictReader(csvfile)
+    # appends information to empty lists after being altered
     for row in reader:
         emp_id.append(row['Emp ID'])
         first_name.append(row['Name'].split(" ")[0])
@@ -77,11 +82,13 @@ with open(file, 'r') as csvfile:
         ssn.append('***-**-' + row['SSN'].split('-')[2])
         state.append(us_state_abbrev[row['State']])
         
-
+# zips lists together
 new_data = zip(emp_id, first_name, last_name, dob, ssn, state)
 
+#names output file
 output_file = os.path.join('Output', 'clean_emp_data' + str(file_num) + '.csv')
 
+#open and writes to csv
 with open(output_file, 'w') as csvwrite:
     cleanfile = csv.writer(csvwrite, delimiter = ",")
     cleanfile.writerow(['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State'])

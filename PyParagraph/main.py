@@ -44,9 +44,10 @@ avg_word_length = letter_total/word_count
 # calculates words per sentence by dividing the number of words by the number of sentences.
 words_per_sentence = word_count/sen_count
 
-
+#sets output file 
 output_file = os.path.join('Output', 'paragraph_analysis_' + str(file_num)+ '.txt')
 
+# opens output file and writes to it
 with open(output_file, 'w') as txtfile:
 
     txtfile.writelines('Paragraph Analysis\n-----------------\nApproximate Word Count: ' 
@@ -54,6 +55,7 @@ with open(output_file, 'w') as txtfile:
                         '\nAverage Letter Count: ' + str(avg_word_length) + 
                         '\nAverage Sentence Length: ' + str(words_per_sentence))
 
+# opens output file and prints to terminal
 with open(output_file, 'r') as txtout:
     print(txtout.read())
 
